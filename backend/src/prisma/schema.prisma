@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         String   @id @default(uuid())
+  idCarrinho String?  @unique
+  idEndereco String?  @unique
+  admin      Boolean  @default(false)
+  nome       String
+  email      String   @unique
+  senha      String
+  criadoEm   DateTime @default(now())
+  editadoEm  DateTime @updatedAt
+  endereco   Endereco?
+  carrinho   Carrinho?
+  transacoes Transacao[]
+}
+
+model Endereco {
+  id         String   @id @default(uuid())
+  idUsuario  String  @unique
+  logradouro String
+  numero     String
+  bairro     String
+  cidade     String
+  estado     String
+  CEP        String
+  pais       String
+  usuario    Usuario  @relation(fields: [idUsuario], references: [id])
+}
+
+model Categoria {
+  id         String   @id @default(uuid())
+  nome       String
+  descricao  String
+  produtos   Produto[]
+}
+
+model Produto {
+  id          String    @id @default(uuid())
+  idCategoria String
+  nome        String
+  preco       Decimal
+  quantidade  Int
+  descricao   String
+  editadoEm   DateTime  @updatedAt
+  categoria   Categoria @relation(fields: [idCategoria], references: [id])
+  itensCarrinho ItemCarrinho[]
+}
+
+model Carrinho {
+  id         String         @id @default(uuid())
+  IdUsuario  String  @unique
+  usuario    Usuario        @relation(fields: [IdUsuario], references: [id])
+  itens      ItemCarrinho[]
+  transacoes Transacao[]
+}
+
+model ItemCarrinho {
+  id         String   @id @default(uuid())
+  idCarrinho String
+  idProduto  String
+  quantidade Int
+  carrinho   Carrinho @relation(fields: [idCarrinho], references: [id])
+  produto    Produto  @relation(fields: [idProduto], references: [id])
+}
+
+model Transacao {
+  id         String   @id @default(uuid())
+  idCarrinho String
+  idUsuario  String
+  valorTotal Decimal
+  criadoEm   DateTime @default(now())
+  usuario    Usuario  @relation(fields: [idUsuario], references: [id])
+  carrinho   Carrinho @relation(fields: [idCarrinho], references: [id])
+}

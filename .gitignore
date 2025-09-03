@@ -1,0 +1,32 @@
+# Node.js
+node_modules/
+.env
+.env.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Prisma
+/backend/src/prisma/dev.db
+/backend/src/prisma/.env
+/backend/src/prisma/migrations/
+
+# Vite/React
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env
+/frontend/.env.local
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Others
+*.sqlite
+*.db
