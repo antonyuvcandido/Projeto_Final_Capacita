@@ -13,9 +13,9 @@ import productsRoutes from './routes/products.js';
 import categoriesRoutes from './routes/categories.js';
 import ordersRoutes from './routes/orders.js';
 
-app.use('/users', usersRoutes);
-app.use('/products', productsRoutes);
-app.use('/categories', categoriesRoutes);
-app.use('/orders', ordersRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/categories', categoriesRoutes);
+app.use('/api/orders', ordersRoutes);
 
 export default app;
