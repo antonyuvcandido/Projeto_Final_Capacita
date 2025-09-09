@@ -36,6 +36,30 @@ const categoryController = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
+  },
+
+  async update(req, res) {
+    const { nome, descricao } = req.body;
+    try {
+      const categoria = await prisma.categoria.update({
+        where: { id: req.params.id },
+        data: { nome, descricao }
+      });
+      res.json(categoria);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      await prisma.categoria.delete({
+        where: { id: req.params.id }
+      });
+      res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 };
 

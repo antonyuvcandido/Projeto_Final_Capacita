@@ -1,28 +1,28 @@
 import prisma from '../lib/prisma.js';
 
-const carrinhoController = {
+const cartController = {
   async getById(req, res) {
     const { id } = req.params;
-    const carrinho = await prisma.carrinho.findUnique({
+    const cart = await prisma.carrinho.findUnique({
       where: { id },
       include: { itens: { include: { produto: true } } }
     });
-    if (!carrinho) return res.status(404).json({ error: 'Carrinho não encontrado' });
-    res.json(carrinho);
+    if (!cart) return res.status(404).json({ error: 'Cart not found' });
+    res.json(cart);
   },
   async update(req, res) {
     const { id } = req.params;
     const data = req.body;
     try {
-      const carrinho = await prisma.carrinho.update({
+      const cart = await prisma.carrinho.update({
         where: { id },
         data
       });
-      res.json(carrinho);
+      res.json(cart);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   }
 };
 
-export default carrinhoController;
+export default cartController;

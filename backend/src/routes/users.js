@@ -6,6 +6,9 @@ const router = express.Router();
 // POST /users - Criar usuário
 router.post('/', userController.create);
 
+// POST /users/login - Login de usuário
+router.post('/login', userController.login);
+
 // GET /users - Listar usuários
 router.get('/', userController.getAll);
 

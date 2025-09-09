@@ -1,0 +1,757 @@
+{
+    "info": {
+        "_postman_id": "12345678-1234-1234-1234-123456789012",
+        "name": "API E-commerce - Projeto Final Capacita",
+        "description": "Coleção completa para testar todas as rotas da API do e-commerce",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Criar Usuário",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao@email.com\",\n  \"senha\": \"123456\",\n  \"admin\": false\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Usuário Admin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Admin Sistema\",\n  \"email\": \"admin@email.com\",\n  \"senha\": \"admin123\",\n  \"admin\": true\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login Usuário",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"joao@email.com\",\n  \"senha\": \"123456\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/login",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login Admin",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"email\": \"admin@email.com\",\n  \"senha\": \"admin123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/login",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users", "login"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Usuários",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users"]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar Usuário por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users", "{{userId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Usuário",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"João Silva Santos\",\n  \"email\": \"joao.santos@email.com\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users", "{{userId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Deletar Usuário",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/users/{{userId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "users", "{{userId}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Categories",
+            "item": [
+                {
+                    "name": "Criar Categoria - Eletrônicos",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Eletrônicos\",\n  \"descricao\": \"Produtos eletrônicos em geral, incluindo smartphones, computadores e acessórios\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Categoria - Roupas",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Roupas\",\n  \"descricao\": \"Vestuário masculino e feminino de todas as idades\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Categoria - Livros",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Livros\",\n  \"descricao\": \"Livros físicos e digitais de diversos gêneros e assuntos\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Categoria - Casa e Jardim",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Casa e Jardim\",\n  \"descricao\": \"Produtos para decoração, utensílios domésticos e jardinagem\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Categorias",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Produtos por Categoria",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories/{{categoryId}}/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": [
+                                "api",
+                                "categories",
+                                "{{categoryId}}",
+                                "products"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Categoria",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Eletrônicos e Tecnologia\",\n  \"descricao\": \"Produtos eletrônicos, tecnologia e inovação para o dia a dia\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories/{{categoryId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories", "{{categoryId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Deletar Categoria",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/categories/{{categoryId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "categories", "{{categoryId}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Criar Produto - Smartphone",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Smartphone Samsung Galaxy S23\",\n  \"preco\": 2499.99,\n  \"quantidade\": 50,\n  \"descricao\": \"Smartphone top de linha com câmera de 108MP, 256GB de armazenamento e tela de 6.8 polegadas\",\n  \"idCategoria\": \"{{categoryIdEletronicos}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Produto - Notebook",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Notebook Dell Inspiron 15\",\n  \"preco\": 3299.90,\n  \"quantidade\": 25,\n  \"descricao\": \"Notebook com processador Intel i7, 16GB RAM, SSD 512GB e placa de vídeo dedicada\",\n  \"idCategoria\": \"{{categoryIdEletronicos}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Produto - Camiseta",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Camiseta Básica Cotton\",\n  \"preco\": 39.90,\n  \"quantidade\": 100,\n  \"descricao\": \"Camiseta 100% algodão, disponível em várias cores e tamanhos\",\n  \"idCategoria\": \"{{categoryIdRoupas}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Produto - Livro",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Clean Code - Robert Martin\",\n  \"preco\": 89.90,\n  \"quantidade\": 30,\n  \"descricao\": \"Livro essencial sobre boas práticas de programação e código limpo\",\n  \"idCategoria\": \"{{categoryIdLivros}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar Produto - Vaso Decorativo",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Vaso Decorativo Cerâmica\",\n  \"preco\": 79.90,\n  \"quantidade\": 20,\n  \"descricao\": \"Vaso decorativo de cerâmica artesanal, ideal para plantas ou como peça decorativa\",\n  \"idCategoria\": \"{{categoryIdCasaJardim}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Produtos",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar Produto por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products/{{productId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products", "{{productId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Produto",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"nome\": \"Smartphone Samsung Galaxy S23 Ultra\",\n  \"preco\": 2799.99,\n  \"quantidade\": 45,\n  \"descricao\": \"Smartphone premium com câmera de 200MP, 512GB de armazenamento e tela de 6.8 polegadas com S Pen\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products/{{productId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products", "{{productId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Deletar Produto",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/products/{{productId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "products", "{{productId}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cart",
+            "item": [
+                {
+                    "name": "Buscar Carrinho por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/carts/{{cartId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "carts", "{{cartId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Carrinho (PUT)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"IdUsuario\": \"{{userId}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/carts/{{cartId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "carts", "{{cartId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Carrinho (PATCH)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"IdUsuario\": \"{{userId}}\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/carts/{{cartId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "carts", "{{cartId}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cart Items",
+            "item": [
+                {
+                    "name": "Adicionar Item ao Carrinho",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"idCarrinho\": \"{{cartId}}\",\n  \"idProduto\": \"{{productId}}\",\n  \"quantidade\": 2\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart-items",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart-items"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Item do Carrinho (PUT)",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"quantidade\": 3\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart-items/{{cartItemId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart-items", "{{cartItemId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Item do Carrinho (PATCH)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"quantidade\": 1\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart-items/{{cartItemId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart-items", "{{cartItemId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Remover Item do Carrinho",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/cart-items/{{cartItemId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "cart-items", "{{cartItemId}}"]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Orders",
+            "item": [
+                {
+                    "name": "Criar Pedido",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"idCarrinho\": \"{{cartId}}\",\n  \"idUsuario\": \"{{userId}}\",\n  \"valorTotal\": 2499.99\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "orders"]
+                        }
+                    }
+                },
+                {
+                    "name": "Listar Pedidos",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "orders"]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar Pedido por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/{{orderId}}",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "orders", "{{orderId}}"]
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar Status do Pedido",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"em_processamento\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/orders/{{orderId}}/status",
+                            "host": ["{{baseUrl}}"],
+                            "path": ["api", "orders", "{{orderId}}", "status"]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [""]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3001",
+            "type": "string"
+        },
+        {
+            "key": "userId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "categoryId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "categoryIdEletronicos",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "categoryIdRoupas",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "categoryIdLivros",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "categoryIdCasaJardim",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "productId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "cartId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "cartItemId",
+            "value": "",
+            "type": "string"
+        },
+        {
+            "key": "orderId",
+            "value": "",
+            "type": "string"
+        }
+    ]
+}

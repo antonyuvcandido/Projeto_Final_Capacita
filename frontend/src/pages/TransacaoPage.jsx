@@ -31,11 +31,11 @@ function TransacaoPage() {
       // Valor total pode ser calculado no backend, mas aqui vamos pedir ao usuário
       const valorTotal = Number(prompt('Informe o valor total da compra:'));
       if (!valorTotal || valorTotal <= 0) return setError('Valor inválido');
-      await api.post('/orders', { idCarrinho, idUsuario, valorTotal });
+      await api.post('/api/orders', { idCarrinho, idUsuario, valorTotal });
       setSucesso('Compra finalizada!');
       setTimeout(() => setSucesso(''), 1500);
       // Atualiza lista de transações
-      const response = await api.get('/transacoes');
+      const response = await api.get('/api/orders');
       setTransacoes(response.data);
     } catch {
       setError('Erro ao finalizar compra');

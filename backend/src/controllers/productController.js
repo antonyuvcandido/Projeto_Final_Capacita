@@ -3,8 +3,8 @@ import prisma from '../lib/prisma.js';
 const productController = {
   async getAll(req, res) {
     try {
-      const produtos = await prisma.produto.findMany({ 
-        include: { categoria: true } 
+      const produtos = await prisma.produto.findMany({
+        include: { categoria: true }
       });
       res.json(produtos);
     } catch (error) {
@@ -31,7 +31,13 @@ const productController = {
     const { nome, preco, quantidade, descricao, idCategoria } = req.body;
     try {
       const produto = await prisma.produto.create({
-        data: { nome, preco, quantidade, descricao, idCategoria }
+        data: {
+          nome,
+          preco: parseFloat(preco),
+          quantidade: parseInt(quantidade),
+          descricao,
+          idCategoria
+        }
       });
       res.status(201).json(produto);
     } catch (error) {
@@ -41,8 +47,12 @@ const productController = {
 
   async update(req, res) {
     const { id } = req.params;
-    const data = req.body;
+    const { nome, preco, quantidade, descricao, idCategoria } = req.body;
     try {
+      const data = { nome, descricao, idCategoria };
+      if (preco) data.preco = parseFloat(preco);
+      if (quantidade) data.quantidade = parseInt(quantidade);
+
       const produto = await prisma.produto.update({
         where: { id },
         data

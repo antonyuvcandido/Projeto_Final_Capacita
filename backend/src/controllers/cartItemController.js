@@ -1,6 +1,6 @@
 import prisma from '../lib/prisma.js';
 
-const itemCarrinhoController = {
+const cartItemController = {
   async create(req, res) {
     const { idCarrinho, idProduto, quantidade } = req.body;
     try {
@@ -36,4 +36,4 @@ const itemCarrinhoController = {
   }
 };
 
-export default itemCarrinhoController;
+export default cartItemController;
