@@ -16,7 +16,7 @@ function PerfilPage() {
       try {
         const idUsuario = localStorage.getItem('idUsuario');
         if (!idUsuario) return setError('Usuário não encontrado');
-        const response = await api.get(`/usuarios/${idUsuario}`);
+        const response = await api.get(`/users/${idUsuario}`);
         setUsuario(response.data);
         setForm({ nome: response.data.nome, email: response.data.email, senha: '' });
       } catch {
@@ -35,7 +35,7 @@ function PerfilPage() {
     setSucesso('');
     try {
       const idUsuario = localStorage.getItem('idUsuario');
-      await api.patch(`/usuarios/${idUsuario}`, form);
+      await api.put(`/users/${idUsuario}`, form);
       setSucesso('Dados atualizados com sucesso!');
       setEditando(false);
       setTimeout(() => setSucesso(''), 1500);

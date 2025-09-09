@@ -12,7 +12,7 @@ function TransacaoPage() {
       setLoading(true);
       setError('');
       try {
-        const response = await api.get('/transacoes');
+        const response = await api.get('/orders');
         setTransacoes(response.data);
       } catch {
         setError('Erro ao carregar transações');
@@ -31,7 +31,7 @@ function TransacaoPage() {
       // Valor total pode ser calculado no backend, mas aqui vamos pedir ao usuário
       const valorTotal = Number(prompt('Informe o valor total da compra:'));
       if (!valorTotal || valorTotal <= 0) return setError('Valor inválido');
-      await api.post('/transacoes', { idCarrinho, idUsuario, valorTotal });
+      await api.post('/orders', { idCarrinho, idUsuario, valorTotal });
       setSucesso('Compra finalizada!');
       setTimeout(() => setSucesso(''), 1500);
       // Atualiza lista de transações

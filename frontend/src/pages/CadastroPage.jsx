@@ -15,7 +15,7 @@ function CadastroPage() {
     setError('');
     setSucesso('');
     try {
-      await api.post('/usuarios', form);
+      await api.post('/users', form);
       setSucesso('Cadastro realizado com sucesso!');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {

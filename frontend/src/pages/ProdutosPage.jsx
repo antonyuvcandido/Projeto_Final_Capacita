@@ -21,8 +21,8 @@ function ProdutosPage() {
     async function fetchProdutos() {
       try {
         const [prodRes, catRes] = await Promise.all([
-          api.get('/produtos'),
-          api.get('/categorias')
+          api.get('/products'),
+          api.get('/categories')
         ]);
         setProdutos(prodRes.data);
         setCategorias(catRes.data);
@@ -38,7 +38,7 @@ function ProdutosPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await api.post('/produtos', form);
+      await api.post('/products', form);
       setForm({ nome: '', preco: '', quantidade: '', descricao: '', idCategoria: '' });
       setLoading(true);
       setSucesso('Produto cadastrado com sucesso!');
@@ -57,7 +57,7 @@ function ProdutosPage() {
   async function handleDelete(id) {
     if (!window.confirm('Deseja realmente excluir este produto?')) return;
     try {
-      await api.delete(`/produtos/${id}`);
+      await api.delete(`/products/${id}`);
       setProdutos(produtos.filter(p => p.id !== id));
       setSucesso('Produto excluído com sucesso!');
       setError('');
@@ -82,7 +82,7 @@ function ProdutosPage() {
   async function handleEditSubmit(e) {
     e.preventDefault();
     try {
-      await api.put(`/produtos/${editId}`, editForm);
+      await api.put(`/products/${editId}`, editForm);
       setEditId(null);
       setLoading(true);
       setSucesso('Produto editado com sucesso!');

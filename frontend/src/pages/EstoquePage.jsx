@@ -15,8 +15,8 @@ function EstoquePage() {
       setError('');
       try {
         const [prodRes, catRes] = await Promise.all([
-          api.get('/produtos'),
-          api.get('/categorias')
+          api.get('/products'),
+          api.get('/categories')
         ]);
         setProdutos(prodRes.data);
         setCategorias(catRes.data);
@@ -42,7 +42,7 @@ function EstoquePage() {
 
   async function removerProduto(id) {
     try {
-      await api.delete(`/produtos/${id}`);
+      await api.delete(`/products/${id}`);
       setProdutos(produtos.filter(p => p.id !== id));
       setSucesso('Produto removido!');
       setTimeout(() => setSucesso(''), 1500);

@@ -1,11 +1,32 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from '../lib/prisma.js';
 
-const produtoController = {
+const productController = {
   async getAll(req, res) {
-    const produtos = await prisma.produto.findMany({ include: { categoria: true } });
-    res.json(produtos);
+    try {
+      const produtos = await prisma.produto.findMany({ 
+        include: { categoria: true } 
+      });
+      res.json(produtos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   },
+
+  async getById(req, res) {
+    try {
+      const produto = await prisma.produto.findUnique({
+        where: { id: req.params.id },
+        include: { categoria: true }
+      });
+      if (!produto) {
+        return res.status(404).json({ error: 'Produto não encontrado' });
+      }
+      res.json(produto);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   async create(req, res) {
     const { nome, preco, quantidade, descricao, idCategoria } = req.body;
     try {
@@ -17,6 +38,7 @@ const produtoController = {
       res.status(400).json({ error: error.message });
     }
   },
+
   async update(req, res) {
     const { id } = req.params;
     const data = req.body;
@@ -30,6 +52,7 @@ const produtoController = {
       res.status(400).json({ error: error.message });
     }
   },
+
   async delete(req, res) {
     const { id } = req.params;
     try {
@@ -41,4 +64,4 @@ const produtoController = {
   }
 };
 
-export default produtoController;
+export default productController;

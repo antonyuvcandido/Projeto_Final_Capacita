@@ -14,8 +14,8 @@ function HomePage() {
       setError('');
       try {
         const [prodRes, catRes] = await Promise.all([
-          api.get('/produtos'),
-          api.get('/categorias')
+          api.get('/products'),
+          api.get('/categories')
         ]);
         setProdutos(prodRes.data);
         setCategorias(catRes.data);

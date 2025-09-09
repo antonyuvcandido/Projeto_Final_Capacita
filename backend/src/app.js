@@ -8,18 +8,14 @@ app.use(cors());
 app.use(express.json());
 
 // Rotas
-import usuarioRoutes from './routes/usuario.js';
-import produtoRoutes from './routes/produto.js';
-import categoriaRoutes from './routes/categoria.js';
-import carrinhoRoutes from './routes/carrinho.js';
-import itemCarrinhoRoutes from './routes/itemCarrinho.js';
-import transacaoRoutes from './routes/transacao.js';
+import usersRoutes from './routes/users.js';
+import productsRoutes from './routes/products.js';
+import categoriesRoutes from './routes/categories.js';
+import ordersRoutes from './routes/orders.js';
 
-app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/produtos', produtoRoutes);
-app.use('/api/categorias', categoriaRoutes);
-app.use('/api/carrinhos', carrinhoRoutes);
-app.use('/api/itens-carrinho', itemCarrinhoRoutes);
-app.use('/api/transacoes', transacaoRoutes);
+app.use('/users', usersRoutes);
+app.use('/products', productsRoutes);
+app.use('/categories', categoriesRoutes);
+app.use('/orders', ordersRoutes);
 
 export default app;

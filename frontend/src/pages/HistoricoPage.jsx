@@ -13,7 +13,7 @@ function HistoricoPage() {
       try {
         const idUsuario = localStorage.getItem('idUsuario');
         if (!idUsuario) return setError('Usuário não encontrado');
-        const response = await api.get('/transacoes');
+        const response = await api.get('/orders');
         const historico = response.data.filter(t => t.idUsuario === idUsuario);
         setTransacoes(historico);
       } catch {
