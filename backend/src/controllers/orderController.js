@@ -1,6 +1,49 @@
 import prisma from '../lib/prisma.js';
 
+/**
+ * @swagger
+ * tags:
+ *   name: Transações
+ *   description: Operações relacionadas a transações
+ * components:
+ *   schemas:
+ *     Transacao:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "ord1"
+ *         idCarrinho:
+ *           type: string
+ *           example: "cart1"
+ *         idUsuario:
+ *           type: string
+ *           example: "user1"
+ *         valorTotal:
+ *           type: number
+ *           example: 3599.99
+ *         status:
+ *           type: string
+ *           example: "finalizado"
+ */
+
 const orderController = {
+  /**
+   * @swagger
+   * /api/transacoes:
+   *   get:
+   *     summary: Lista todas as transações
+   *     tags: [Transações]
+   *     responses:
+   *       200:
+   *         description: Lista de transações
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Transacao'
+   */
   async getAll(req, res) {
     try {
       const transacoes = await prisma.transacao.findMany({
@@ -28,6 +71,28 @@ const orderController = {
     }
   },
 
+  /**
+   * @swagger
+   * /api/transacoes/{id}:
+   *   get:
+   *     summary: Busca transação por ID
+   *     tags: [Transações]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     responses:
+   *       200:
+   *         description: Transação encontrada
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Transacao'
+   *       404:
+   *         description: Transação não encontrada
+   */
   async getById(req, res) {
     try {
       const transacao = await prisma.transacao.findUnique({
@@ -59,6 +124,34 @@ const orderController = {
     }
   },
 
+  /**
+   * @swagger
+   * /api/transacoes:
+   *   post:
+   *     summary: Cria uma nova transação
+   *     tags: [Transações]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - idCarrinho
+   *             properties:
+   *               idCarrinho:
+   *                 type: string
+   *                 example: "cart1"
+   *     responses:
+   *       201:
+   *         description: Transação criada
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Transacao'
+   *       400:
+   *         description: Erro de validação
+   */
   async create(req, res) {
     const { idCarrinho } = req.body;
     try {
@@ -96,6 +189,39 @@ const orderController = {
     }
   },
 
+  /**
+   * @swagger
+   * /api/transacoes/{id}/status:
+   *   patch:
+   *     summary: Atualiza o status da transação
+   *     tags: [Transações]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - status
+   *             properties:
+   *               status:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Status atualizado
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Transacao'
+   *       400:
+   *         description: Erro ao atualizar
+   */
   async updateStatus(req, res) {
     const { id } = req.params;
     const { status } = req.body;
