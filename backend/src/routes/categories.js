@@ -6,6 +6,9 @@ const router = express.Router();
 // POST /categories - Criar categoria
 router.post('/', categoryController.create);
 
+// POST /categories/many - Criar múltiplas categorias
+router.post('/many', categoryController.createmany);
+
 // GET /categories - Listar categorias
 router.get('/', categoryController.getAll);
 
