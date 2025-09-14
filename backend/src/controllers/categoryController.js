@@ -22,6 +22,18 @@ const categoryController = {
     }
   },
 
+  async createmany(req, res) {
+    const categorias = req.body;
+    try {
+      const createdCategorias = await prisma.categoria.createMany({
+        data: categorias
+      });
+      res.status(201).json(createdCategorias);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    } 
+  }, 
+
   async getProductsByCategory(req, res) {
     try {
       const produtos = await prisma.produto.findMany({
