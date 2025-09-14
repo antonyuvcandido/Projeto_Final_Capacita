@@ -12,7 +12,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/transacoes:
+ * /api/orders:
  *   get:
  *     summary: Lista todas as transações
  *     tags: [Transações]
@@ -45,7 +45,7 @@ router.get('/', orderController.getAll);
 
 /**
  * @swagger
- * /api/transacoes/{id}:
+ * /api/orders/{id}:
  *   get:
  *     summary: Busca transação por ID
  *     tags: [Transações]
@@ -79,7 +79,7 @@ router.get('/:id', orderController.getById);
 
 /**
  * @swagger
- * /api/transacoes:
+ * /api/orders:
  *   post:
  *     summary: Cria uma nova transação
  *     tags: [Transações]
@@ -117,7 +117,7 @@ router.post('/', orderController.create);
 
 /**
  * @swagger
- * /api/transacoes/{id}/status:
+ * /api/orders/{id}/status:
  *   patch:
  *     summary: Atualiza o status da transação
  *     tags: [Transações]

@@ -30,7 +30,7 @@ import prisma from '../lib/prisma.js';
 const orderController = {
   /**
    * @swagger
-   * /api/transacoes:
+   * /api/orders:
    *   get:
    *     summary: Lista todas as transações
    *     tags: [Transações]
@@ -73,7 +73,7 @@ const orderController = {
 
   /**
    * @swagger
-   * /api/transacoes/{id}:
+   * /api/orders/{id}:
    *   get:
    *     summary: Busca transação por ID
    *     tags: [Transações]
@@ -126,7 +126,7 @@ const orderController = {
 
   /**
    * @swagger
-   * /api/transacoes:
+   * /api/orders:
    *   post:
    *     summary: Cria uma nova transação
    *     tags: [Transações]
@@ -191,7 +191,7 @@ const orderController = {
 
   /**
    * @swagger
-   * /api/transacoes/{id}/status:
+   * /api/orders/{id}/status:
    *   patch:
    *     summary: Atualiza o status da transação
    *     tags: [Transações]
