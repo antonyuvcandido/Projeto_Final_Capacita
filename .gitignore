@@ -9,7 +9,6 @@ yarn-error.log*
 # Prisma
 /backend/src/prisma/dev.db
 /backend/src/prisma/.env
-/backend/src/prisma/migrations/
 
 # Vite/React
 /frontend/node_modules/
