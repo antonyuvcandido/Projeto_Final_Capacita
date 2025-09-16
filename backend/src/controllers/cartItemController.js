@@ -1,5 +1,26 @@
 import prisma from '../lib/prisma.js';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ItemCarrinho:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "item1"
+ *         idCarrinho:
+ *           type: string
+ *           example: "cart1"
+ *         idProduto:
+ *           type: string
+ *           example: "prod1"
+ *         quantidade:
+ *           type: integer
+ *           example: 2
+ */
+
 const cartItemController = {
   async create(req, res) {
     const { idCarrinho, idProduto, quantidade } = req.body;

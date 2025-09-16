@@ -1,5 +1,20 @@
 import prisma from '../lib/prisma.js';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Carrinho:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "cart1"
+ *         idUsuario:
+ *           type: string
+ *           example: "user1"
+ */
+
 const cartController = {
   async getById(req, res) {
     const { id } = req.params;

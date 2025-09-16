@@ -144,3 +144,26 @@ npm install
 - Gestão de estoque
 
 Após iniciar a aplicação, crie uma conta de usuário e explore as funcionalidades!
+
+# Projeto Final Capacita - API
+
+## Documentação da API
+
+A documentação da API está disponível via Swagger em:
+
+```
+http://localhost:3001/api-docs
+```
+
+Você pode acessar, testar e visualizar todos os endpoints, parâmetros e exemplos diretamente pelo navegador.
+
+## Como acessar
+
+1. Inicie o backend normalmente (`npm run dev`)
+2. Abra o navegador e acesse: [http://localhost:3001/api-docs]
+
+## Recursos disponíveis
+
+- Visualização dos endpoints, parâmetros, exemplos e modelos
+- Teste dos endpoints diretamente pelo navegador
+- Exemplos de uso e respostas esperadas
