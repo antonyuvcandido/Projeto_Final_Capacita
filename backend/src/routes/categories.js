@@ -212,4 +212,40 @@ router.put('/:id', categoryController.update);
  */
 router.delete('/:id', categoryController.delete);
 
+/**
+ * @swagger
+ * /api/categories/{id}/products:
+ *   get:
+ *     summary: Busca de produtos por categoria
+ *     tags: [Categorias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: "cat1"
+ *     responses:
+ *       200:
+ *         description: Produtos da categoria buscada foram encontrados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Produto'
+ *             examples:
+ *               exemplo:
+ *                 value:
+ *                   - id: "prod1"
+ *                     nome: "Notebook"
+ *                     preco: 3500.99
+ *                     quantidade: 10
+ *                     descricao: "Notebook Dell Inspiron"
+ *                     idCategoria: "cat1"
+ *       404:
+ *         description: Categoria não encontrada
+ */
+router.get('/:id/products', categoryController.getProductsByCategory);
+
 export default router;

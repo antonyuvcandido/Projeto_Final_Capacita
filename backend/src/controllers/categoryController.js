@@ -151,37 +151,60 @@ const categoryController = {
    * @swagger
    * /api/categories/many:
    *   post:
-   *     summary: Cria uma lista de categorias
+   *     summary: Cria várias categorias ao mesmo tempo
    *     tags: [Categorias]
    *     requestBody:
    *       required: true
    *       content:
    *         application/json:
    *           schema:
-   *             type: object
-   *             required:
-   *               - nome
-   *               - descricao
-   *             properties:
-   *               nome:
-   *                 type: string
-   *                 example: "Eletrônicos"
-   *               descricao:
-   *                 type: string
-   *                 example: "Produtos eletrônicos em geral"
+   *             type: array
+   *             items:
+   *               type: object
+   *               required:
+   *                 - nome
+   *                 - descricao
+   *               properties:
+   *                 nome:
+   *                   type: string
+   *                   example: "Eletrônicos"
+   *                 descricao:
+   *                   type: string
+   *                   example: "Produtos eletrônicos como smartphones, laptops, TVs e acessórios"
+   *           examples:
+   *             exemplo:
+   *               value:
+   *                 - nome: "Eletrônicos"
+   *                   descricao: "Produtos eletrônicos como smartphones, laptops, TVs e acessórios"
+   *                 - nome: "Roupas"
+   *                   descricao: "Vestuário masculino, feminino e infantil para todas as estações"
+   *                 - nome: "Móveis"
+   *                   descricao: "Móveis para sala, quarto, cozinha e escritório"
+   *                 - nome: "Alimentos"
+   *                   descricao: "Alimentos não perecíveis, bebidas e itens de mercearia"
+   *                 - nome: "Livros"
+   *                   descricao: "Livros de diversos gêneros, incluindo ficção, não-ficção e didáticos"
+   *                 - nome: "Esportes"
+   *                   descricao: "Equipamentos e acessórios esportivos para diversas modalidades"
+   *                 - nome: "Beleza"
+   *                   descricao: "Produtos de beleza, cuidados pessoais e cosméticos"
+   *                 - nome: "Brinquedos"
+   *                   descricao: "Brinquedos e jogos para todas as idades"
+   *                 - nome: "Jardim"
+   *                   descricao: "Ferramentas e acessórios para jardim e áreas externas"
+   *                 - nome: "Automotivo"
+   *                   descricao: "Peças, acessórios e produtos para veículos"
    *     responses:
    *       201:
    *         description: Categorias criadas
    *         content:
    *           application/json:
    *             schema:
-   *               $ref: '#/components/schemas/Categoria'
-   *             examples:
-   *               exemplo:
-   *                 value:
-   *                   id: "cat1"
-   *                   nome: "Eletrônicos"
-   *                   descricao: "Produtos eletrônicos em geral"
+   *               type: object
+   *               properties:
+   *                 count:
+   *                   type: integer
+   *                   example: 10
    *       400:
    *         description: Erro de validação
    */
@@ -207,26 +230,27 @@ const categoryController = {
    *       - in: path
    *         name: id
    *         required: true
-   *         name: produtos
-   *         required: false
    *         schema:
    *           type: string
    *         example: "cat1"
-   *         type: object
-   *         example: "{ "id": "prod1", "nome": "Notebook", "preco": 3500.99, "quantidade": 10, "descricao": "Notebook Dell Inspiron", "idCategoria": "cat1"}"
    *     responses:
    *       200:
    *         description: Produtos da categoria buscada foram encontrados
    *         content:
    *           application/json:
    *             schema:
-   *               $ref: '#/components/schemas/Categoria'
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Produto'
    *             examples:
    *               exemplo:
    *                 value:
-   *                   id: "cat1"
-   *                   nome: "Eletrônicos"
-   *                   descricao: "Produtos eletrônicos em geral"
+   *                   - id: "prod1"
+   *                     nome: "Notebook"
+   *                     preco: 3500.99
+   *                     quantidade: 10
+   *                     descricao: "Notebook Dell Inspiron"
+   *                     idCategoria: "cat1"
    *       404:
    *         description: Categoria não encontrada
    */
@@ -241,6 +265,9 @@ const categoryController = {
           categoria: true
         }
       });
+      if (produtos.length === 0) {
+        return res.status(404).json({ error: 'Categoria sem produtos' });
+      }
       res.json(produtos);
     } catch (error) {
       res.status(500).json({ error: error.message });
