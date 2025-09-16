@@ -96,6 +96,7 @@ const categoryController = {
     }
   },
 
+
   /**
    * @swagger
    * /api/categories:
@@ -145,6 +146,107 @@ const categoryController = {
       res.status(400).json({ error: error.message });
     }
   },
+  
+  /**
+   * @swagger
+   * /api/categories/many:
+   *   post:
+   *     summary: Cria uma lista de categorias
+   *     tags: [Categorias]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - nome
+   *               - descricao
+   *             properties:
+   *               nome:
+   *                 type: string
+   *                 example: "Eletrônicos"
+   *               descricao:
+   *                 type: string
+   *                 example: "Produtos eletrônicos em geral"
+   *     responses:
+   *       201:
+   *         description: Categorias criadas
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Categoria'
+   *             examples:
+   *               exemplo:
+   *                 value:
+   *                   id: "cat1"
+   *                   nome: "Eletrônicos"
+   *                   descricao: "Produtos eletrônicos em geral"
+   *       400:
+   *         description: Erro de validação
+   */
+  async createmany(req, res) {
+    const categorias = req.body;
+    try {
+      const createdCategorias = await prisma.categoria.createMany({
+        data: categorias
+      });
+      res.status(201).json(createdCategorias);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    } 
+  }, 
+    
+  /**
+   * @swagger
+   * /api/categories/{id}/products:
+   *   get:
+   *     summary: Busca de produtos por categoria
+   *     tags: [Categorias]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         name: produtos
+   *         required: false
+   *         schema:
+   *           type: string
+   *         example: "cat1"
+   *         type: object
+   *         example: "{ "id": "prod1", "nome": "Notebook", "preco": 3500.99, "quantidade": 10, "descricao": "Notebook Dell Inspiron", "idCategoria": "cat1"}"
+   *     responses:
+   *       200:
+   *         description: Produtos da categoria buscada foram encontrados
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Categoria'
+   *             examples:
+   *               exemplo:
+   *                 value:
+   *                   id: "cat1"
+   *                   nome: "Eletrônicos"
+   *                   descricao: "Produtos eletrônicos em geral"
+   *       404:
+   *         description: Categoria não encontrada
+   */
+
+  async getProductsByCategory(req, res) {
+    try {
+      const produtos = await prisma.produto.findMany({
+        where: {
+          idCategoria: req.params.id
+        },
+        include: {
+          categoria: true
+        }
+      });
+      res.json(produtos);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+    
 
   /**
    * @swagger

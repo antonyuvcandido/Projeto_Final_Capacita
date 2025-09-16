@@ -10,6 +10,46 @@ const router = express.Router();
  */
 
 /**
+* @swagger
+* /api/categories/many:
+*   post:
+*     summary: Cria uma lista de categorias
+*     tags: [Categorias]
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             type: object
+*             required:
+*               - nome
+*               - descricao
+*             properties:
+*               nome:
+*                 type: string
+*                 example: "Eletrônicos"
+*               descricao:
+*                 type: string
+*                 example: "Produtos eletrônicos em geral"
+*     responses:
+*       201:
+*         description: Categorias criadas
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/Categoria'
+*             examples:
+*               exemplo:
+*                 value:
+*                   id: "cat1"
+*                   nome: "Eletrônicos"
+*                   descricao: "Produtos eletrônicos em geral"
+*       400:
+*         description: Erro de validação
+*/
+router.post('/many', categoryController.createmany);
+
+/**
  * @swagger
  * /api/categories:
  *   get:
