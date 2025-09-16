@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import DataGrid from '../components/DataGrid';
 import api from '../services/api';
 
 function HistoricoPage() {
@@ -26,8 +27,13 @@ function HistoricoPage() {
   }, []);
 
   return (
-    <div style={{marginLeft:'220px',padding:'2rem'}}>
+    <div style={{marginLeft:'220px',
+                padding: '2rem',
+                minHeight: '100vh',
+                background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+                }}>
       <h2>Histórico de Transações</h2>
+      {/* 
       {loading && <p>Carregando...</p>}
       {error && <p style={{color:'red'}}>{error}</p>}
       <ul style={{padding:0,listStyle:'none'}}>
@@ -39,6 +45,8 @@ function HistoricoPage() {
           </li>
         ))}
       </ul>
+      */}
+      <DataGrid />
     </div>
   );
 }
