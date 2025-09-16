@@ -134,14 +134,21 @@ const productController = {
   async create(req, res) {
     const { nome, preco, quantidade, descricao, idCategoria } = req.body;
     try {
+      const dadosProduto = {
+        nome,
+        preco: parseFloat(preco),
+        quantidade: parseInt(quantidade),
+        descricao,
+        idCategoria
+      };
+
+      // Se uma imagem foi enviada, adiciona o caminho ao produto
+      if (req.file) {
+        dadosProduto.imagem = `/uploads/produtos/${req.file.filename}`;
+      }
+
       const produto = await prisma.produto.create({
-        data: {
-          nome,
-          preco: parseFloat(preco),
-          quantidade: parseInt(quantidade),
-          descricao,
-          idCategoria
-        }
+        data: dadosProduto
       });
       res.status(201).json(produto);
     } catch (error) {
@@ -195,6 +202,11 @@ const productController = {
       const data = { nome, descricao, idCategoria };
       if (preco) data.preco = parseFloat(preco);
       if (quantidade) data.quantidade = parseInt(quantidade);
+
+      // Se uma nova imagem foi enviada, adiciona o caminho ao produto
+      if (req.file) {
+        data.imagem = `/uploads/produtos/${req.file.filename}`;
+      }
 
       const produto = await prisma.produto.update({
         where: { id },
