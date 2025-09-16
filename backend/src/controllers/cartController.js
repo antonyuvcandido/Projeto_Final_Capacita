@@ -18,13 +18,52 @@ import prisma from '../lib/prisma.js';
 const cartController = {
   async getById(req, res) {
     const { id } = req.params;
-    const cart = await prisma.carrinho.findUnique({
-      where: { id },
-      include: { itens: { include: { produto: true } } }
-    });
-    if (!cart) return res.status(404).json({ error: 'Cart not found' });
-    res.json(cart);
+    try {
+      const cart = await prisma.carrinho.findUnique({
+        where: { id },
+        include: {
+          itens: {
+            include: {
+              produto: {
+                include: {
+                  categoria: true
+                }
+              }
+            }
+          }
+        }
+      });
+      if (!cart) return res.status(404).json({ error: 'Carrinho não encontrado' });
+      res.json(cart);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   },
+
+  async getByUserId(req, res) {
+    const { userId } = req.params;
+    try {
+      const cart = await prisma.carrinho.findUnique({
+        where: { idUsuario: userId },
+        include: {
+          itens: {
+            include: {
+              produto: {
+                include: {
+                  categoria: true
+                }
+              }
+            }
+          }
+        }
+      });
+      if (!cart) return res.status(404).json({ error: 'Carrinho não encontrado para este usuário' });
+      res.json(cart);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   async update(req, res) {
     const { id } = req.params;
     const data = req.body;

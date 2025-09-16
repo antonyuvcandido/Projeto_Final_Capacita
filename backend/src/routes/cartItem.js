@@ -56,6 +56,45 @@ router.post('/', cartItemController.create);
 
 /**
  * @swagger
+ * /api/cart-items/user/{userId}:
+ *   post:
+ *     summary: Adiciona um item ao carrinho do usuário
+ *     tags: [ItemCarrinho]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: "user1"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - idProduto
+ *               - quantidade
+ *             properties:
+ *               idProduto:
+ *                 type: string
+ *                 example: "prod1"
+ *               quantidade:
+ *                 type: integer
+ *                 example: 2
+ *     responses:
+ *       201:
+ *         description: Item adicionado
+ *       400:
+ *         description: Erro de validação
+ *       404:
+ *         description: Carrinho não encontrado
+ */
+router.post('/user/:userId', cartItemController.addToCartByUserId);
+
+/**
+ * @swagger
  * /api/cart-items/{id}:
  *   put:
  *     summary: Atualiza um item do carrinho

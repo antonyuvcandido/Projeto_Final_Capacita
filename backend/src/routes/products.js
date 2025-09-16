@@ -1,5 +1,6 @@
 import express from 'express';
 import productController from '../controllers/productController.js';
+import upload from '../middleware/upload.js';
 const router = express.Router();
 
 /**
@@ -129,7 +130,7 @@ router.get('/:id', productController.getById);
  *       400:
  *         description: Erro de validação
  */
-router.post('/', productController.create);
+router.post('/', upload.single('imagem'), productController.create);
 
 /**
  * @swagger
@@ -185,7 +186,7 @@ router.post('/', productController.create);
  *       400:
  *         description: Erro de validação
  */
-router.put('/:id', productController.update);
+router.put('/:id', upload.single('imagem'), productController.update);
 
 /**
  * @swagger
