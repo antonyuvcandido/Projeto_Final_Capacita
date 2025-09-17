@@ -41,6 +41,31 @@ router.get('/:id', cartController.getById);
 
 /**
  * @swagger
+ * /api/carts/user/{userId}:
+ *   get:
+ *     summary: Busca carrinho por ID do usuário
+ *     tags: [Carrinho]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: "user1"
+ *     responses:
+ *       200:
+ *         description: Carrinho encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Carrinho'
+ *       404:
+ *         description: Carrinho não encontrado
+ */
+router.get('/user/:userId', cartController.getByUserId);
+
+/**
+ * @swagger
  * /api/carts/{id}:
  *   put:
  *     summary: Atualiza um carrinho

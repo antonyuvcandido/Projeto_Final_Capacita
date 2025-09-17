@@ -21,6 +21,7 @@ function ProdutosPage() {
         quantidade: '',
         descricao: '',
         idCategoria: '',
+        imagem: null,
     })
     const [editId, setEditId] = useState(null)
     const [editForm, setEditForm] = useState({
@@ -29,6 +30,7 @@ function ProdutosPage() {
         quantidade: '',
         descricao: '',
         idCategoria: '',
+        imagem: null,
     })
 
     useEffect(() => {
@@ -52,13 +54,29 @@ function ProdutosPage() {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            await api.post('/products', form)
+            const formData = new FormData()
+            formData.append('nome', form.nome)
+            formData.append('preco', form.preco)
+            formData.append('quantidade', form.quantidade)
+            formData.append('descricao', form.descricao)
+            formData.append('idCategoria', form.idCategoria)
+            if (form.imagem) {
+                formData.append('imagem', form.imagem)
+            }
+
+            await api.post('/products', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+
             setForm({
                 nome: '',
                 preco: '',
                 quantidade: '',
                 descricao: '',
                 idCategoria: '',
+                imagem: null,
             })
             setLoading(true)
             setSucesso('Produto cadastrado com sucesso!')
@@ -96,13 +114,30 @@ function ProdutosPage() {
             quantidade: produto.quantidade,
             descricao: produto.descricao,
             idCategoria: produto.idCategoria,
+            imagem: null,
+            imagemAtual: produto.imagem,
         })
     }
 
     async function handleEditSubmit(e) {
         e.preventDefault()
         try {
-            await api.put(`/products/${editId}`, editForm)
+            const formData = new FormData()
+            formData.append('nome', editForm.nome)
+            formData.append('preco', editForm.preco)
+            formData.append('quantidade', editForm.quantidade)
+            formData.append('descricao', editForm.descricao)
+            formData.append('idCategoria', editForm.idCategoria)
+            if (editForm.imagem) {
+                formData.append('imagem', editForm.imagem)
+            }
+
+            await api.put(`/products/${editId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+
             setEditId(null)
             setLoading(true)
             setSucesso('Produto editado com sucesso!')
@@ -462,6 +497,51 @@ function ProdutosPage() {
                                 </option>
                             ))}
                         </select>
+                    </div>
+
+                    <div>
+                        <label
+                            style={{
+                                display: 'block',
+                                color: '#015FCA',
+                                fontWeight: '500',
+                                marginBottom: '0.5rem',
+                                fontSize: '0.9rem',
+                            }}
+                        >
+                            Imagem do Produto
+                        </label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) =>
+                                setForm((f) => ({
+                                    ...f,
+                                    imagem: e.target.files[0],
+                                }))
+                            }
+                            style={{
+                                width: '100%',
+                                padding: '0.75rem',
+                                border: '2px solid #e8ecef',
+                                borderRadius: '8px',
+                                fontSize: '0.9rem',
+                                transition: 'all 0.3s ease',
+                                outline: 'none',
+                                boxSizing: 'border-box',
+                                background: '#fff',
+                                cursor: 'pointer',
+                            }}
+                            onFocus={(e) =>
+                                (e.target.style.borderColor = '#015FCA')
+                            }
+                            onBlur={(e) =>
+                                (e.target.style.borderColor = '#e8ecef')
+                            }
+                        />
+                        <small style={{ color: '#666', fontSize: '0.8rem' }}>
+                            Formatos aceitos: JPG, PNG, GIF (máx. 5MB)
+                        </small>
                     </div>
 
                     <div style={{ gridColumn: '1 / -1' }}>
@@ -900,6 +980,84 @@ function ProdutosPage() {
                                                 </option>
                                             ))}
                                         </select>
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            style={{
+                                                display: 'block',
+                                                color: '#015FCA',
+                                                fontWeight: '500',
+                                                marginBottom: '0.3rem',
+                                                fontSize: '0.8rem',
+                                            }}
+                                        >
+                                            Nova Imagem
+                                        </label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) =>
+                                                setEditForm((f) => ({
+                                                    ...f,
+                                                    imagem: e.target.files[0],
+                                                }))
+                                            }
+                                            style={{
+                                                width: '100%',
+                                                padding: '0.5rem',
+                                                border: '1px solid #e8ecef',
+                                                borderRadius: '6px',
+                                                fontSize: '0.9rem',
+                                                outline: 'none',
+                                                boxSizing: 'border-box',
+                                                background: '#fff',
+                                                cursor: 'pointer',
+                                            }}
+                                            onFocus={(e) =>
+                                                (e.target.style.borderColor =
+                                                    '#015FCA')
+                                            }
+                                            onBlur={(e) =>
+                                                (e.target.style.borderColor =
+                                                    '#e8ecef')
+                                            }
+                                        />
+                                        {editForm.imagemAtual && (
+                                            <div
+                                                style={{ marginTop: '0.5rem' }}
+                                            >
+                                                <small
+                                                    style={{
+                                                        color: '#666',
+                                                        fontSize: '0.75rem',
+                                                    }}
+                                                >
+                                                    Imagem atual:
+                                                </small>
+                                                <img
+                                                    src={`http://localhost:3001${editForm.imagemAtual}`}
+                                                    alt="Imagem atual"
+                                                    style={{
+                                                        width: '60px',
+                                                        height: '60px',
+                                                        objectFit: 'cover',
+                                                        borderRadius: '4px',
+                                                        marginLeft: '8px',
+                                                        border: '1px solid #e8ecef',
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                        <small
+                                            style={{
+                                                color: '#666',
+                                                fontSize: '0.75rem',
+                                            }}
+                                        >
+                                            Deixe em branco para manter a imagem
+                                            atual
+                                        </small>
                                     </div>
 
                                     <div style={{ gridColumn: '1 / -1' }}>

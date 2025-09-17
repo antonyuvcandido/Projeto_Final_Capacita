@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import CadastroPage from './pages/CadastroPage'
 import ProdutosPage from './pages/ProdutosPage'
+import ProdutoDetalhePage from './pages/ProdutoDetalhePage'
 import CategoriasPage from './pages/CategoriasPage'
 import RequireAuth from './components/RequireAuth'
 import EstoquePage from './pages/EstoquePage'
@@ -21,6 +22,7 @@ function App() {
             <Sidebar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/produtos/:id" element={<ProdutoDetalhePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/cadastro" element={<CadastroPage />} />
                 <Route

@@ -147,20 +147,25 @@ const userController = {
    *         description: Erro de validação
    */
   async create(req, res) {
-    const { nome, email, senha, admin } = req.body;
+    const { nome, email, senha, admin = false } = req.body;
     try {
       const hash = await bcrypt.hash(senha, 10);
       const usuario = await prisma.usuario.create({
-        data: { 
-          nome, 
-          email, 
-          senha: hash, 
-          admin,
-          carrinho: {
-            create: {}
-          }
+        data: {
+          nome,
+          email,
+          senha: hash,
+          admin
         }
       });
+
+      // Criar carrinho separadamente
+      await prisma.carrinho.create({
+        data: {
+          idUsuario: usuario.id
+        }
+      });
+
       res.status(201).json(usuario);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -292,11 +297,11 @@ const userController = {
       const valido = await bcrypt.compare(senha, usuario.senha);
       if (!valido) return res.status(401).json({ error: 'Usuário ou senha inválidos' });
       const token = jwt.sign(
-        { id: usuario.id, email: usuario.email, admin: usuario.admin }, 
-        process.env.JWT_SECRET || 'segredo', 
+        { id: usuario.id, email: usuario.email, admin: usuario.admin },
+        process.env.JWT_SECRET || 'segredo',
         { expiresIn: '1d' }
       );
-      res.json({ 
+      res.json({
         token,
         usuario: {
           id: usuario.id,
