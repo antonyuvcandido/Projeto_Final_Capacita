@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import api from '../services/api'
 import { Link } from 'react-router-dom'
 import ProductSlider from '../components/ProductSlider'
+import SearchBar from '../components/SearchBar'
 
 function HomePage() {
     const [produtos, setProdutos] = useState([])
+    const [produtosFiltrados, setProdutosFiltrados] = useState([])
     const [categorias, setCategorias] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [searchTerm, setSearchTerm] = useState('')
+    const [sortBy, setSortBy] = useState('')
 
     useEffect(() => {
         async function fetchData() {
@@ -19,6 +23,7 @@ function HomePage() {
                     api.get('/categories'),
                 ])
                 setProdutos(prodRes.data)
+                setProdutosFiltrados(prodRes.data)
                 setCategorias(catRes.data)
             } catch {
                 setError('Erro ao carregar dados')
@@ -28,6 +33,37 @@ function HomePage() {
         }
         fetchData()
     }, [])
+
+    useEffect(() => {
+        let filtered = [...produtos]
+        
+        // Aplicar filtro de pesquisa
+        if (searchTerm) {
+            filtered = filtered.filter(produto =>
+                produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        }
+
+        // Aplicar ordenação
+        if (sortBy) {
+            filtered.sort((a, b) => {
+                switch (sortBy) {
+                    case 'name-asc':
+                        return a.nome.localeCompare(b.nome)
+                    case 'name-desc':
+                        return b.nome.localeCompare(a.nome)
+                    case 'price-asc':
+                        return parseFloat(a.preco) - parseFloat(b.preco)
+                    case 'price-desc':
+                        return parseFloat(b.preco) - parseFloat(a.preco)
+                    default:
+                        return 0
+                }
+            })
+        }
+
+        setProdutosFiltrados(filtered)
+    }, [produtos, searchTerm, sortBy])
 
     return (
         <div
@@ -52,11 +88,23 @@ function HomePage() {
                 </div>
             )}
 
+            {/* Barra de pesquisa e ordenação */}
+            {!loading && !error && (
+                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
+                    <SearchBar
+                        searchTerm={searchTerm}
+                        onSearchChange={setSearchTerm}
+                        sortBy={sortBy}
+                        onSortChange={setSortBy}
+                    />
+                </div>
+            )}
+
             {/* Header da seção de produtos */}
             {!loading && !error && (
                 <div style={{ marginTop: '2rem' }}>
                     <h2 style={{ marginBottom: '1rem', color: '#333' }}>
-                        Nossos Produtos
+                        Nossos Produtos {produtosFiltrados.length > 0 && `(${produtosFiltrados.length})`}
                     </h2>
                     <div
                         style={{
@@ -67,7 +115,7 @@ function HomePage() {
                             marginTop: '1rem',
                         }}
                     >
-                        {produtos.map((produto) => (
+                        {produtosFiltrados.map((produto) => (
                             <div
                                 key={produto.id}
                                 style={{
