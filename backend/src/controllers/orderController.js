@@ -178,7 +178,7 @@ const orderController = {
       const transacao = await prisma.transacao.create({
         data: {
           idCarrinho,
-          idUsuario: carrinho.IdUsuario,
+          idUsuario: carrinho.idUsuario,
           valorTotal
         }
       });

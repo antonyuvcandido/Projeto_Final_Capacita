@@ -64,6 +64,23 @@ const cartController = {
     }
   },
 
+  async create(req, res) {
+    const { idUsuario } = req.body;
+    try {
+      const existingCart = await prisma.carrinho.findUnique({
+        where: { idUsuario }
+      });
+      if (existingCart) {
+        return res.status(400).json({ error: 'Usuário já possui um carrinho' });
+      }
+      const cart = await prisma.carrinho.create({
+        data: { idUsuario }
+      });
+      res.status(201).json(cart);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }},
+
   async update(req, res) {
     const { id } = req.params;
     const data = req.body;

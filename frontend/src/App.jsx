@@ -43,7 +43,7 @@ function App() {
                 />
                 <Route path="/estoque" element={<EstoquePage />} />
                 <Route path="/carrinho" element={<CarrinhoPage />} />
-                <Route path="/transacao" element={<TransacaoPage />} />
+                <Route path="/transacao/:id" element={<TransacaoPage />} />
                 <Route path="/historico" element={<HistoricoPage />} />
                 <Route path="/perfil" element={<PerfilPage />} />
             </Routes>

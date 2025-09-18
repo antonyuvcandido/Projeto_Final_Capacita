@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import DataGrid from '../components/DataGrid';
 import api from '../services/api';
 
 function HistoricoPage() {
   const [transacoes, setTransacoes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
 
   useEffect(() => {
     async function fetchHistorico() {
@@ -26,11 +28,22 @@ function HistoricoPage() {
   }, []);
 
   return (
-    <div style={{marginLeft:'220px',padding:'2rem'}}>
-      <h2>Histórico de Transações</h2>
+    <div style={{marginLeft:'220px',
+                padding: '2rem',
+                minHeight: '100vh',
+                background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+                }}>
+      <h2 style={{
+                    color: '#015FCA',
+                    marginBottom: '1.5rem',
+                    fontSize: '1.8rem',
+                }}>
+      Histórico de Transações
+      </h2>
       {loading && <p>Carregando...</p>}
       {error && <p style={{color:'red'}}>{error}</p>}
-      <ul style={{padding:0,listStyle:'none'}}>
+      {!loading && !error && transacoes.length === 0 && <p>Nenhuma transação encontrada.</p>}
+      {/*<ul style={{padding:0,listStyle:'none'}}>
         {transacoes.map(t => (
           <li key={t.id} style={{border:'1px solid #ccc',margin:'1rem 0',padding:'1rem',borderRadius:'8px'}}>
             <p><strong>Valor Total:</strong> R$ {t.valorTotal}</p>
@@ -38,7 +51,10 @@ function HistoricoPage() {
             <p><strong>Carrinho:</strong> {t.idCarrinho}</p>
           </li>
         ))}
-      </ul>
+      </ul>*/}
+
+      <DataGrid transacoes={transacoes} />
+      
     </div>
   );
 }
