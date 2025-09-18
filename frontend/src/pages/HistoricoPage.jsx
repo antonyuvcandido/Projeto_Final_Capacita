@@ -33,7 +33,13 @@ function HistoricoPage() {
                 minHeight: '100vh',
                 background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
                 }}>
-      <h2>Histórico de Transações</h2>
+      <h2 style={{
+                    color: '#015FCA',
+                    marginBottom: '1.5rem',
+                    fontSize: '1.8rem',
+                }}>
+      Histórico de Transações
+      </h2>
       {loading && <p>Carregando...</p>}
       {error && <p style={{color:'red'}}>{error}</p>}
       {!loading && !error && transacoes.length === 0 && <p>Nenhuma transação encontrada.</p>}

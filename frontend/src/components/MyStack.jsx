@@ -29,6 +29,10 @@ export default function MyStack({data, valor, status}) {
   return (
     <div style={{
                 padding: '2% 6%',
+                margin: '2% 0',
+                borderRadius: '12px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                maxWidth: '800px',
                 background: '#ddddddff',
             }}>
 

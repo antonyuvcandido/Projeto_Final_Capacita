@@ -6,6 +6,8 @@ function CarrinhoPage() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [sucesso, setSucesso] = useState('')
+    const [idCarrinho, setIdCarrinho] = useState(null)
+    const [idUsuario, setIdUsuario] = useState(null)
 
     useEffect(() => {
         async function fetchCarrinho() {
@@ -15,7 +17,8 @@ function CarrinhoPage() {
                 // Por enquanto, usando o primeiro usuário como padrão
                 // Em uma aplicação real, isso viria do sistema de autenticação
                 const users = await api.get('/users')
-                const userId = users.data[0]?.id
+
+                const userId = localStorage.getItem('idUsuario')
 
                 console.log('UserId encontrado:', userId)
 
@@ -39,6 +42,8 @@ function CarrinhoPage() {
 
                 console.log('Itens do carrinho:', carrinho.itens)
                 setItens(carrinho.itens)
+                setIdCarrinho(carrinho.id)
+                setIdUsuario(userId)
             } catch (err) {
                 console.error('Erro ao carregar carrinho:', err)
                 if (err.response?.status === 404) {
@@ -102,6 +107,19 @@ function CarrinhoPage() {
             acc + parseFloat(item.produto?.preco || 0) * item.quantidade,
         0
     )
+
+    async function finalizarCompra() {
+        try {
+        if (!valorTotal || valorTotal <= 0) return setError('Valor inválido');
+        await api.post('/orders', { idCarrinho });
+        setSucesso('Compra finalizada!');
+        setTimeout(() => setSucesso(''), 1500);
+        setItens([]);
+        } catch (err) {
+        console.error('Erro ao finalizar compra:', err); // Mostra no console
+        setError(`Erro ao finalizar compra: ${err.response?.data?.message || err.message}`);
+        }
+    }
 
     return (
         <div
@@ -460,6 +478,8 @@ function CarrinhoPage() {
                                 (e.currentTarget.style.backgroundColor =
                                     '#015FCA')
                             }
+                            disabled={!idCarrinho}
+                            onClick={finalizarCompra}
                         >
                             Finalizar Compra
                         </button>
