@@ -64,6 +64,39 @@ router.get('/:id', cartController.getById);
  */
 router.get('/user/:userId', cartController.getByUserId);
 
+/** 
+ * @swagger
+ * /api/carts:
+ *   post:
+ *     summary: Cria um carrinho para o usuário caso não exista
+ *     tags: [Carrinho]
+ *     requestBody: 
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idUsuario:
+ *                 type: string
+ *                 example: "user1"
+ *     responses:
+ *       201:
+ *         description: Carrinho criado
+ *         content:
+ *           application/json:
+ *             schema:
+ *              $ref: '#/components/schemas/Carrinho'
+ *             examples:
+ *               exemplo:
+ *                value:
+ *                 id: "cart1"
+ *                 idUsuario: "user1"
+ *       400:
+ *         description: Erro de validação
+ */
+router.post('/', cartController.create);
+
 /**
  * @swagger
  * /api/carts/{id}:

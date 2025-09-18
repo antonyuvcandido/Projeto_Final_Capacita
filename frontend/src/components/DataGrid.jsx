@@ -70,8 +70,9 @@ export default function DataGridDemo() {
   );
 }*/
 
-export default function DataGrid() {
+export default function DataGrid({transacoes}) {
 
+    
     return (
         <div style={{
                 padding: '2rem',
@@ -96,14 +97,16 @@ export default function DataGrid() {
             >
                 <h3>Data</h3>
                 <h3>Valor</h3>
-                <h3>Produtos</h3>
                 <h3>Status</h3>
                 <h3 style={{ paddingInline: '6%'  }}>Detalhes</h3>
 
                 </Stack>
         </div>
-                
-        <MyStack />
+        {transacoes?.map((t) => (
+          <div key={t.id}>
+            <MyStack data={t.criadoEm} valor={t.valorTotal} status={t.status} />
+          </div>
+        ))}
         </div>
     );
 }

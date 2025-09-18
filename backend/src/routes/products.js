@@ -108,6 +108,9 @@ router.get('/:id', productController.getById);
  *               descricao:
  *                 type: string
  *                 example: "Notebook Dell Inspiron"
+ *               imagem:
+ *                type: string
+ *                example: "/uploads/produtos/notebook.jpg"
  *               idCategoria:
  *                 type: string
  *                 example: "cat1"
@@ -126,6 +129,7 @@ router.get('/:id', productController.getById);
  *                   preco: 3500.99
  *                   quantidade: 10
  *                   descricao: "Notebook Dell Inspiron"
+ *                   imagem: "/uploads/produtos/notebook.jpg"
  *                   idCategoria: "cat1"
  *       400:
  *         description: Erro de validação

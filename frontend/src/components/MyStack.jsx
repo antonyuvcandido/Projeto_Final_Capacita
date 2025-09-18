@@ -3,11 +3,32 @@ import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
+import api from '../services/api'
 
-export default function MyStack() {
+export default function MyStack({data, valor, status}) {
+  
+  if (data) {
+    const date = new Date(data);
+    data = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+  }
+
+  if (valor) {
+    valor = Number(valor);
+    valor = `R$ ${valor.toFixed(2)}`;
+  }
+
+  if (status) {
+    if (status === 'pending') status = 'Pendente';
+    else if (status === 'completed') status = 'Concluído';
+    else if (status === 'canceled') status = 'Cancelado';
+    else status = 'Desconhecido';
+  } else {
+    status = 'Desconhecido';
+  }
+
   return (
     <div style={{
-                padding: '2% 7%',
+                padding: '2% 6%',
                 background: '#ddddddff',
             }}>
 
@@ -18,12 +39,11 @@ export default function MyStack() {
         divider={<Divider orientation="vertical" flexItem />}
         spacing={3}
       >
-        <p>Data</p>
-        <p>Valor</p>
-        <p>Produtos</p>
-        <p>Status</p>
+        <span>{data}</span>
+        <span>{valor}</span>
+        <span>{status}</span>
         <button
-                            type="submit"
+                            type="button"
                             style={{
                                 width: '20%',
                                 padding: '0.875rem',

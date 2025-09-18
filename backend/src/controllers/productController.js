@@ -22,6 +22,9 @@ import prisma from '../lib/prisma.js';
  *         descricao:
  *           type: string
  *           example: "Notebook Dell Inspiron"
+ *         imagem:
+ *           type: string
+ *           example: "/uploads/produtos/notebook.jpg"
  *         idCategoria:
  *           type: string
  *           example: "cat1"
@@ -109,6 +112,7 @@ const productController = {
    *               - preco
    *               - quantidade
    *               - descricao
+   *               - imagem
    *               - idCategoria
    *             properties:
    *               nome:
@@ -118,6 +122,8 @@ const productController = {
    *               quantidade:
    *                 type: integer
    *               descricao:
+   *                 type: string
+   *               imagem:
    *                 type: string
    *               idCategoria:
    *                 type: string
@@ -182,6 +188,8 @@ const productController = {
    *               quantidade:
    *                 type: integer
    *               descricao:
+   *                 type: string
+   *               imagem:
    *                 type: string
    *               idCategoria:
    *                 type: string
