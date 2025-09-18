@@ -1,12 +1,15 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import api from '../services/api'
 
-export default function MyStack({data, valor, status}) {
+export default function MyStack({id, data, valor, status}) {
   
+  const navigate = useNavigate();
+
   if (data) {
     const date = new Date(data);
     data = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
@@ -68,6 +71,7 @@ export default function MyStack({data, valor, status}) {
                             onMouseOut={(e) => {
                                 e.target.style.boxShadow = 'none'
                             }}
+                            onClick={() => navigate(`/transacao/${id}`)}
                         >
                             Ver mais
                         </button>

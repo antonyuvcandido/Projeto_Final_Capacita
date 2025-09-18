@@ -29,7 +29,7 @@ function ProdutoDetalhePage() {
             // Por enquanto, usando o primeiro usuário como padrão
             // Em uma aplicação real, isso viria do sistema de autenticação
             const users = await api.get('/users')
-            const userId = users.data[0]?.id
+            const userId = localStorage.getItem('idUsuario')
 
             if (!userId) {
                 alert('Erro: Nenhum usuário encontrado. Faça login primeiro.')

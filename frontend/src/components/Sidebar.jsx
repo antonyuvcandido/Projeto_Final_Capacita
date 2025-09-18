@@ -87,21 +87,6 @@ function Sidebar() {
                     </li>
                     <li>
                         <Link
-                            to="/transacao"
-                            style={{
-                                color: '#015FCA',
-                                textDecoration: 'none',
-                                display: 'block',
-                                padding: '0.5rem',
-                                borderRadius: '4px',
-                                transition: 'background-color 0.2s',
-                            }}
-                        >
-                            Transação
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
                             to="/historico"
                             style={{
                                 color: '#015FCA',

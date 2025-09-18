@@ -104,7 +104,7 @@ export default function DataGrid({transacoes}) {
         </div>
         {transacoes?.map((t) => (
           <div key={t.id}>
-            <MyStack data={t.criadoEm} valor={t.valorTotal} status={t.status} />
+            <MyStack id={t.id} data={t.criadoEm} valor={t.valorTotal} status={t.status} />
           </div>
         ))}
         </div>
