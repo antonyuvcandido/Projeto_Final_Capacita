@@ -110,14 +110,31 @@ function CarrinhoPage() {
 
     async function finalizarCompra() {
         try {
-        if (!valorTotal || valorTotal <= 0) return setError('Valor inválido');
-        await api.post('/orders', { idCarrinho });
-        setSucesso('Compra finalizada!');
-        setTimeout(() => setSucesso(''), 1500);
-        setItens([]);
+            if (!valorTotal || valorTotal <= 0) return setError('Valor inválido');
+            
+            // Finaliza a compra
+            await api.post('/orders', { idCarrinho });
+            
+            // Remove todos os itens do carrinho
+            const deletePromises = itens.map(item => 
+                api.delete(`/cart-items/${item.id}`)
+            );
+            
+            await Promise.all(deletePromises);
+            
+            setSucesso('Compra finalizada com sucesso!');
+            setTimeout(() => {
+                setSucesso('');
+                // Redireciona para o histórico após 1.5 segundos
+                window.location.href = '/historico';
+            }, 1500);
+            
+            setItens([]);
         } catch (err) {
-        console.error('Erro ao finalizar compra:', err); // Mostra no console
-        setError(`Erro ao finalizar compra: ${err.response?.data?.message || err.message}`);
+            console.error('Erro ao finalizar compra:', err);
+            const errorMessage = err.response?.data?.error || err.message;
+            setError(`Erro ao finalizar compra: ${errorMessage}`);
+            setTimeout(() => setError(''), 3000);
         }
     }
 

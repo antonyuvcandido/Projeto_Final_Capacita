@@ -41,11 +41,46 @@ function App() {
                         </RequireAuth>
                     }
                 />
-                <Route path="/estoque" element={<EstoquePage />} />
-                <Route path="/carrinho" element={<CarrinhoPage />} />
-                <Route path="/transacao/:id" element={<TransacaoPage />} />
-                <Route path="/historico" element={<HistoricoPage />} />
-                <Route path="/perfil" element={<PerfilPage />} />
+                <Route 
+                    path="/estoque" 
+                    element={
+                        <RequireAuth>
+                            <EstoquePage />
+                        </RequireAuth>
+                    } 
+                />
+                <Route 
+                    path="/carrinho" 
+                    element={
+                        <RequireAuth>
+                            <CarrinhoPage />
+                        </RequireAuth>
+                    } 
+                />
+                <Route 
+                    path="/transacao/:id" 
+                    element={
+                        <RequireAuth>
+                            <TransacaoPage />
+                        </RequireAuth>
+                    } 
+                />
+                <Route 
+                    path="/historico" 
+                    element={
+                        <RequireAuth>
+                            <HistoricoPage />
+                        </RequireAuth>
+                    } 
+                />
+                <Route 
+                    path="/perfil" 
+                    element={
+                        <RequireAuth>
+                            <PerfilPage />
+                        </RequireAuth>
+                    } 
+                />
             </Routes>
         </Router>
     )

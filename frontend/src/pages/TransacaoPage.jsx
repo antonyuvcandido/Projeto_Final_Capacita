@@ -90,11 +90,11 @@ function TransacaoPage() {
 
         <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start' }}>
           <div style={{ flex: 2 }}>
-            {transacao?.carrinho?.itens?.map((item) => (
+            {transacao?.itens?.map((item) => (
               <div key={item.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
                 <img
-                  src={item.produto?.imagem ? `http://localhost:3001${item.produto.imagem}` : "https://via.placeholder.com/150"}
-                  alt={item.produto?.nome}
+                  src={item.imagemProduto ? `http://localhost:3001/uploads/produtos${item.imagemProduto.replace('/uploads/produtos', '')}` : "https://via.placeholder.com/150"}
+                  alt={item.nomeProduto}
                   style={{
                     width: '100%',
                     maxWidth: '187.5px',
@@ -105,9 +105,10 @@ function TransacaoPage() {
                   }}
                 />
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <p style={{ margin: 0 }}><strong>Produto:</strong> {item.produto?.nome}</p>
-                  <p style={{ margin: 0 }}><strong>Preço:</strong> R$ {Number(item.produto?.preco).toFixed(2)}</p>
+                  <p style={{ margin: 0 }}><strong>Produto:</strong> {item.nomeProduto}</p>
+                  <p style={{ margin: 0 }}><strong>Preço unitário:</strong> R$ {Number(item.precoProduto).toFixed(2)}</p>
                   <p style={{ margin: 0 }}><strong>Quantidade:</strong> {item.quantidade}</p>
+                  <p style={{ margin: 0 }}><strong>Subtotal:</strong> R$ {Number(item.valorItem).toFixed(2)}</p>
                 </div>
               </div>
             ))}

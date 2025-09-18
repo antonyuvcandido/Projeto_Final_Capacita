@@ -72,12 +72,24 @@ model ItemCarrinho {
   produto    Produto  @relation(fields: [idProduto], references: [id], onDelete: Cascade)
 }
 
+model ItemTransacao {
+  id          String    @id @default(uuid())
+  idTransacao String
+  nomeProduto String
+  precoProduto Decimal
+  quantidade  Int
+  imagemProduto String?
+  valorItem   Decimal
+  transacao   Transacao @relation(fields: [idTransacao], references: [id], onDelete: Cascade)
+}
+
 model Transacao {
   id         String   @id @default(uuid())
   idCarrinho String
   idUsuario  String
   valorTotal Decimal
   criadoEm   DateTime @default(now())
+  itens      ItemTransacao[]
   usuario    Usuario  @relation(fields: [idUsuario], references: [id], onDelete: Cascade)
   carrinho   Carrinho @relation(fields: [idCarrinho], references: [id], onDelete: Cascade)
 }

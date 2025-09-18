@@ -104,15 +104,8 @@ const orderController = {
               email: true
             }
           },
-          carrinho: {
-            include: {
-              itens: {
-                include: {
-                  produto: true
-                }
-              }
-            }
-          }
+          itens: true,
+          carrinho: true
         }
       });
       if (!transacao) {
@@ -155,35 +148,70 @@ const orderController = {
   async create(req, res) {
     const { idCarrinho } = req.body;
     try {
-      const carrinho = await prisma.carrinho.findUnique({
-        where: { id: idCarrinho },
-        include: {
-          itens: {
-            include: {
-              produto: true
+      // Inicia uma transação no banco de dados para garantir consistência
+      const result = await prisma.$transaction(async (prisma) => {
+        const carrinho = await prisma.carrinho.findUnique({
+          where: { id: idCarrinho },
+          include: {
+            itens: {
+              include: {
+                produto: true
+              }
             }
           }
+        });
+
+        if (!carrinho) {
+          throw new Error('Carrinho não encontrado');
         }
+
+        // Verifica se há quantidade suficiente de cada produto
+        for (const item of carrinho.itens) {
+          if (item.produto.quantidade < item.quantidade) {
+            throw new Error(`Produto ${item.produto.nome} não tem quantidade suficiente em estoque`);
+          }
+        }
+
+        // Atualiza a quantidade de cada produto
+        for (const item of carrinho.itens) {
+          await prisma.produto.update({
+            where: { id: item.produto.id },
+            data: {
+              quantidade: item.produto.quantidade - item.quantidade
+            }
+          });
+        }
+
+        // Calcula o valor total do pedido
+        const valorTotal = carrinho.itens.reduce((total, item) => {
+          return total + (item.quantidade * item.produto.preco);
+        }, 0);
+
+        // Cria a transação com os itens
+        const transacao = await prisma.transacao.create({
+          data: {
+            idCarrinho,
+            idUsuario: carrinho.idUsuario,
+            valorTotal,
+            itens: {
+              create: carrinho.itens.map(item => ({
+                nomeProduto: item.produto.nome,
+                precoProduto: item.produto.preco,
+                quantidade: item.quantidade,
+                imagemProduto: item.produto.imagem,
+                valorItem: item.quantidade * item.produto.preco
+              }))
+            }
+          },
+          include: {
+            itens: true
+          }
+        });
+
+        return transacao;
       });
 
-      if (!carrinho) {
-        return res.status(404).json({ error: 'Carrinho não encontrado' });
-      }
-
-      // Calcula o valor total do pedido
-      const valorTotal = carrinho.itens.reduce((total, item) => {
-        return total + (item.quantidade * item.produto.preco);
-      }, 0);
-
-      const transacao = await prisma.transacao.create({
-        data: {
-          idCarrinho,
-          idUsuario: carrinho.idUsuario,
-          valorTotal
-        }
-      });
-
-      res.status(201).json(transacao);
+      res.status(201).json(result);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
